@@ -202,6 +202,9 @@ extern "C" {
 
     #[link_name = "\u{1}_ZN2nn3hid15GetNpadStyleSetERKj"]
     fn get_style(id: *const u32) -> ControllerStyle;
+
+    #[link_name = "\u{1}_ZN2nn3hid14InitializeNpadEv"]
+    fn initialize_npad();
 }
 
 #[derive(Debug, Default, Copy, Clone)]
@@ -467,5 +470,11 @@ pub mod any {
         } else {
             false
         }
+    }
+}
+
+pub fn init() {
+    unsafe {
+        initialize_npad();
     }
 }
