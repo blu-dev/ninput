@@ -216,6 +216,9 @@ extern "C" {
 
     #[link_name = "\u{1}_ZN2nn3hid24SetSupportedNpadStyleSetENS_4util10BitFlagSetILi32ENS0_12NpadStyleTagEEE"]
     fn set_supported_style_set(set: u32);
+
+    #[link_name = "\u{1}_ZN2nn3hid6detail22SetSupportedNpadIdTypeEPKji"]
+    fn set_supported_npad_ids(ids: *const u32, count: u32);
 }
 
 #[derive(Debug, Default, Copy, Clone)]
@@ -500,6 +503,8 @@ pub mod any {
 pub fn init() {
     unsafe {
         initialize_npad();
-        set_supported_style_set(0x00_00_00_3F)
+        set_supported_style_set(0x00_00_00_3F);
+        static ID_LIST: &[u32] = &[0, 1, 2, 3, 4, 5, 6, 7, 0x10];
+        set_supported_npad_ids(ID_LIST.as_ptr(), ID_LIST.len() as u32);
     }
 }
