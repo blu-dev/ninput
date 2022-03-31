@@ -126,6 +126,10 @@ impl Buttons {
     pub fn is_sr(&self) -> bool {
         self.intersects(Self::LEFT_SR | Self::RIGHT_SR)
     }
+    
+    pub fn is_z(&self) -> bool {
+        self.intersects(Self::ZL | Self::ZR)
+    }
 
     pub fn up() -> Self {
         Self::UP | Self::STICK_L_UP | Self::STICK_R_UP
@@ -141,6 +145,10 @@ impl Buttons {
 
     pub fn left() -> Self {        
         Self::LEFT | Self::STICK_L_LEFT | Self::STICK_L_LEFT
+    }
+    
+    pub fn z() -> Self {
+        Self::ZL | Self::ZR
     }
 }
 
@@ -390,6 +398,19 @@ impl Controller {
 
 pub mod any {
     use super::*;
+    
+    pub fn combined_buttons() -> Buttons {
+        let mut buttons = Buttons::default();
+        for x in 0..8 {
+            if let Some(controller) = Controller::get_from_id(x) {
+                buttons |= controller.pressed_buttons;
+            }
+        }
+        if let Some(controller) = Controller::get_from_id(0x20) {
+            buttons |= controller.pressed_buttons;
+        }
+        buttons
+    }
 
     pub fn is_press_any(buttons: Buttons) -> bool {
         for x in 0..7 {
