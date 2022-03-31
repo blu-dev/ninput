@@ -205,6 +205,9 @@ extern "C" {
 
     #[link_name = "\u{1}_ZN2nn3hid14InitializeNpadEv"]
     fn initialize_npad();
+
+    #[link_name = "\u{1}_ZN2nn3hid24SetSupportedNpadStyleSetENS_4util10BitFlagSetILi32ENS0_12NpadStyleTagEEE"]
+    fn set_supported_style_set(set: u32);
 }
 
 #[derive(Debug, Default, Copy, Clone)]
@@ -476,5 +479,6 @@ pub mod any {
 pub fn init() {
     unsafe {
         initialize_npad();
+        set_supported_style_set(0x00_00_00_3F)
     }
 }
